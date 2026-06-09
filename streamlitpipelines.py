@@ -66,7 +66,7 @@ if st.sidebar.button("Predecir"):
 
     target = regressor.predict(obs)      
     ingreso_mensual = target[0] / 12  
-    st.markdown(f'<p style="font-size: 40px; color: green;">El ingreso neto anual proyectado es de: S/ {target:,.2f}</p>', unsafe_allow_html=True)
+    st.markdown(f'<p style="font-size: 40px; color: green;">El ingreso neto anual proyectado es de: S/ {target[0]:,.2f}</p>', unsafe_allow_html=True)
     st.markdown(f'<p style="font-size: 40px; color: green;">El ingreso neto mensual proyectado es de: S/ {ingreso_mensual:,.2f}</p>', unsafe_allow_html=True)
 
 # Resetear
