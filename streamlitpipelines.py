@@ -7,7 +7,7 @@ regressor = load('Modelopipeline.joblib')
 
 # Valores iniciales
 defaults = {
-    "edad": 18, "sexo": 1, "estado_civil": 1,
+    "edad": 18, "sexo": 1, "estado_civil": 1, "nivel_educativo":1,
     "horas_trabajadas": 24, "categoria_ocupacional": 522,
     "actividad_empresa": 5629, "dominio": 1
 }
@@ -29,7 +29,7 @@ estado_civil = ec_map[st.sidebar.selectbox("Estado civil", list(ec_map.keys()))]
 
 # Nivel educativo
 ec_map = {"Sin nivel": 1, "Educacion iniciañ": 2, "primaria incompleta": 3, "primaria completa": 4, "secundaria incompleta": 5, "secundaria completa": 6}
-estado_civil = ec_map[st.sidebar.selectbox("Estado civil", list(ec_map.keys()))]
+nivel_educativo = ec_map[st.sidebar.selectbox("Nivel educativo", list(ec_map.keys()))]
 
 # Horas trabajadas
 horas_trabajadas = st.sidebar.number_input("Horas trabajadas (Min=24, Max=48)", min_value=24, max_value=48, value=defaults["horas_trabajadas"])
@@ -55,6 +55,7 @@ if st.sidebar.button("Predecir"):
         'edad': [edad],
         'sexo': [sexo],
         'estado_civil': [estado_civil],
+        'nivel_educativo': [estado_civil],
         'horas_trabajadas': [horas_trabajadas],
         'categoria_ocupacional': [categoria_ocupacional],
         'actividad_empresa': [actividad_empresa],
