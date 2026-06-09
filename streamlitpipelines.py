@@ -73,7 +73,7 @@ sexo = st.sidebar.selectbox("sexo", ["Masculino", "Femenino"], index=[1,2].index
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Estado civil</h1>", unsafe_allow_html=True)
 estado_civil = st.sidebar.selectbox("estado_civil", ["Soltero", "Casado"], index=[1, 2].index(estado_civil))
 
-horas_trabajadas = st.sidebar.number_input("**horas_trabajadas (Min=24, Max=48)**", min_value=24, value=float(horas_trabajadas))
+horas_trabajadas = st.sidebar.number_input("**horas_trabajadas (Min=24, Max=48)**", min_value=24, max_value=48, value=int(horas_trabajadas))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Categoria ocupacional</h1>", unsafe_allow_html=True)
 categoria_ocupacional = st.sidebar.selectbox("categoria_ocupacional", ["barmanes y trabajadores asimilados", "explotadores forestales, trabajadores forestales clasificados y afines"], index=[522, 615].index(categoria_ocupacional))
