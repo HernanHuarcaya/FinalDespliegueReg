@@ -1,202 +1,68 @@
-# Debe direccionar VS Code a la carpeta con los archivos:
-# 1.- Archivo
-# 2.- Abrir carpeta. Debe dar click en la carpeta que contiene los archivos de interés
-#3.- A la izquierda, en el explorador deberá poder visualizar todos los archivos
-#------------------------------------------------------------------------------------------------
-
-# CÓDIGO STREAMLIT
-# Ir a:   Ver/Terminal
-# Crea un ambiente virtual (puedes usar otro nombre en lugar de 'venv'): coloca este código
-#   python -m venv venv
-
-#---------------------------------------------------------------------------------------
-# Luego de crear el ambiente virtual, lo activas
-#   .\venv\Scripts\activate   # En Windows
-#---------------------------------------------------------------------------------------
-
-#----------------------------------------------------------------------------------------------
-# Cuando vuelva a iniciar sesión, debe volver a activar el ambiente virtual, ya no lo debe crear.
-# En este caso debes abrir la carpeta con los archivos del caso.
-#---------------------------------------------------------------------------------------------
-
-
-# Instala la versión específica de scikit-learn
-#   pip install scikit-learn==1.2.2
-# Instala otras dependencias, incluyendo Streamlit
-#  pip install streamlit pandas joblib
-#-------------------------------------------------------------------------------------------------
-# Desde la segunda vez: hacer:
-# Si da error, debes ir a PowerShell de Window y:
-#      Get-ExecutionPolicy                           Si es Restricted; ejecuta
-#      Set-ExecutionPolicy RemoteSigned              Colocar Sí
-# En consola de VSC:  .\venv\Scripts\activate
-
-
-
 import streamlit as st
 import pandas as pd
 from joblib import load
-import pickle
 import numpy as np
-from sklearn.preprocessing import StandardScaler
-#import pyautogui
 
-# Cargar el modelo de regresión
 regressor = load('Modelopipeline.joblib')
 
-# Cargar el encoder
-#with open('encoderpipeline.pickle', 'rb') as f:
-#    encoder = pickle.load(f)
+# Valores iniciales
+defaults = {
+    "edad": 18, "sexo": 1, "estado_civil": 1,
+    "horas_trabajadas": 24, "categoria_ocupacional": 522,
+    "actividad_empresa": 5629, "dominio": 1
+}
 
-# Inicializar variables
-edad = 18
-sexo = 1
-estado_civil= 1
-horas_trabajadas= 24
-categoria_ocupacional=522
-actividad_empresa=5629
-dominio= 1
-
-# Streamlit app
-st.title("Modelo de Regresión -  Trabajo final")
+st.title("Modelo de Regresión - Trabajo final")
 st.markdown("##### Debe seleccionar las opciones, de lo contrario la predicción será incorrecta.")
+st.sidebar.header("Campos a Evaluar")
 
-# Sidebar para la entrada del usuario
-st.sidebar.header("Campos a Evaluar el ingreso de la Persona")
+# Edad
+edad = st.sidebar.number_input("Edad (Min=18, Max=110)", min_value=18, max_value=110, value=defaults["edad"])
 
-# Entrada del usuario para RD_Spend
-edad = st.sidebar.number_input("**edad (Min=18, Max=110)**", min_value=18, value=int(edad))
+# Sexo
+sexo_map = {"Masculino": 1, "Femenino": 2}
+sexo = sexo_map[st.sidebar.selectbox("Sexo", list(sexo_map.keys()))]
 
-st.sidebar.markdown("<h1 style='font-size: 24px;'>Sexo</h1>", unsafe_allow_html=True)
-sexo = st.sidebar.selectbox("sexo", ["Masculino", "Femenino"], index=[1,2].index(sexo))
+# Estado civil
+ec_map = {"Soltero": 1, "Casado": 2}
+estado_civil = ec_map[st.sidebar.selectbox("Estado civil", list(ec_map.keys()))]
 
-st.sidebar.markdown("<h1 style='font-size: 24px;'>Estado civil</h1>", unsafe_allow_html=True)
-estado_civil = st.sidebar.selectbox("estado_civil", ["Soltero", "Casado"], index=[1, 2].index(estado_civil))
+# Horas trabajadas
+horas_trabajadas = st.sidebar.number_input("Horas trabajadas (Min=24, Max=48)", min_value=24, max_value=48, value=defaults["horas_trabajadas"])
 
-horas_trabajadas = st.sidebar.number_input("**horas_trabajadas (Min=24, Max=48)**", min_value=24, max_value=48, value=int(horas_trabajadas))
+# Categoría ocupacional
+cat_map = {
+    "Barmanes y trabajadores asimilados": 522,
+    "Explotadores forestales y afines": 615
+}
+categoria_ocupacional = cat_map[st.sidebar.selectbox("Categoría ocupacional", list(cat_map.keys()))]
 
-st.sidebar.markdown("<h1 style='font-size: 24px;'>Categoria ocupacional</h1>", unsafe_allow_html=True)
-categoria_ocupacional = st.sidebar.selectbox("categoria_ocupacional", ["barmanes y trabajadores asimilados", "explotadores forestales, trabajadores forestales clasificados y afines"], index=[522, 615].index(categoria_ocupacional))
+# Actividad empresa
+act_map = {"Actividad 01": 5629, "Actividad 02": 150}
+actividad_empresa = act_map[st.sidebar.selectbox("Actividad empresa", list(act_map.keys()))]
 
-st.sidebar.markdown("<h1 style='font-size: 24px;'>Actividad empresa</h1>", unsafe_allow_html=True)
-actividad_empresa = st.sidebar.selectbox("actividad_empresa", ["Actividad 01", "Actividad 02"], index=[5629, 150].index(actividad_empresa))
+# Dominio
+dom_map = {"Costa Norte": 1, "Costa Centro": 2, "Costa Sur": 3, "Sierra Norte": 4, "Sierra Centro": 5}
+dominio = dom_map[st.sidebar.selectbox("Dominio", list(dom_map.keys()))]
 
-st.sidebar.markdown("<h1 style='font-size: 24px;'>Dominio</h1>", unsafe_allow_html=True)
-dominio = st.sidebar.selectbox("dominio", ["Costa Norte", "Costa Centro","Costa Sur","Sierra Norte","Sierra Centro"], index=[1,2,3,4,5].index(dominio))
-
-# Función para resetear las entradas
-def reset_inputs():
-    global edad, sexo, estado_civil, horas_trabajadas, categoria_ocupacional, actividad_empresa, dominio
-    edad = 0
-    horas_trabajadas = 0
-    sexo = 1
-    estado_civil = 1
-    categoria_ocupacional = 522
-    actividad_empresa = 5629
-    dominio = 1
-
-# Botón para predecir
+# Predecir
 if st.sidebar.button("Predecir"):
-    # Validar las entradas
-    print(edad, sexo, estado_civil, horas_trabajadas, categoria_ocupacional, actividad_empresa, dominio)
-    if all(isinstance(val, (int, float)) and val >= 0 for val in [edad, sexo, estado_civil, horas_trabajadas, categoria_ocupacional, actividad_empresa, dominio]):
-        # Crear un DataFrame con las entradas del usuario
-        obs = pd.DataFrame({
-            'Edad': [edad],
-            'Sexo': [sexo],
-            'Estado civil': [estado_civil],
-            'Horas trabajadas por semana': [horas_trabajadas],
-            'Categoria ocupacional': [categoria_ocupacional],
-            'Actividad empresa': [actividad_empresa],
-            'Dominio': [dominio]
-        })
+    obs = pd.DataFrame({
+        'Edad': [edad],
+        'Sexo': [sexo],
+        'Estado civil': [estado_civil],
+        'Horas trabajadas por semana': [horas_trabajadas],
+        'Categoria ocupacional': [categoria_ocupacional],
+        'Actividad empresa': [actividad_empresa],
+        'Dominio': [dominio]
+    })
+    st.write("DataFrame de Entradas:")
+    st.write(obs)
 
-        # Mostrar el DataFrame de entradas para depuración
-        st.write("DataFrame de Entradas:")
-        st.write(obs)
+    target = regressor.predict(obs)
+    st.markdown(f'<p style="font-size: 40px; color: green;">La predicción del Ingreso será: S/ {target[0]:,.2f}</p>', unsafe_allow_html=True)
 
-        #----------------------Pipeline-------------------------
-        # Predecir usando el modelo
-        target = regressor.predict(obs)
-
-        # Mostrar la predicción con un tamaño de fuente grande usando markdown
-        st.markdown(f'<p style="font-size: 40px; color: green;">La predicción del Ingreso será: ${target[0]:,.2f}</p>', unsafe_allow_html=True)
-
-    else:
-        st.warning("Rellene todos los espacios en blanco")
-
-# Colocar el botón "Resetear" debajo del botón "Predecir"
+# Resetear
 if st.sidebar.button("Resetear"):
-    # Resetear inputs
-    reset_inputs()
-
-
-
-
-#	edad	sexo	estado_civil	horas_trabajadas	categoria_ocupacional	actividad_empresa	dominio	    ingreso	    Profit_predict
-#	63	    2	        5	            3	                522	                5629	            5	            14039.126953	    11612.434731
-#	42	    1	        2	            2	                615	                150	                5	            5766.923340	        10687.291158
-#	33	    1	        1	            4	                885	                2396	            5	            19948.009766	    13665.625699
-
-
-
-""" Sexo:
-○ Hombre
-○ Mujer
-
-Estado civil:
-○ Soltero
-○ Casado
-○ Conviviente
-○ Viudo
-○ Divorciado
-○ Separado
-
-Nivel educativo:
-○ Sin nivel
-○ Primaria incompleta
-○ Primaria completa
-○ Secundaria incompleta
-○ Secundaria completa
-○ Superior técnica incompleta
-○ Superior técnica completa
-○ Universitaria incompleta
-○ Universitaria completa
-○ Posgrado
-
-Horas trabajadas por semana:
-_______
-
-Categoría ocupacional:
-○ Empleador
-○ Independiente
-○ Empleado
-○ Obrero
-○ TFNR
-○ Trabajador del hogar
-
-Tamaño de empresa:
-○ 1 trabajador
-○ 2-10 trabajadores
-○ 11-50 trabajadores
-○ 51+ trabajadores
-
-Dominio:
-○ Costa Norte
-○ Costa Centro
-○ Costa Sur
-○ Sierra Norte
-○ Sierra Centro
-○ Sierra Sur
-○ Selva
-○ Lima Metropolitana """
-
-
-
-
-# Cambiar los valores.
-# Para asignar valores: ver los rangos de las cuantitativas ( MÍNIMO --MÁXIMO)
-# eso determinan  cómo predice el modelo. 
-
-#  streamlit run streamlitpipelines.py       en la consola
-#  pip freeze > requirements.txt
+    st.session_state.clear()
+    st.rerun()
