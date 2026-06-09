@@ -48,13 +48,13 @@ dominio = dom_map[st.sidebar.selectbox("Dominio", list(dom_map.keys()))]
 # Predecir
 if st.sidebar.button("Predecir"):
     obs = pd.DataFrame({
-        'Edad': [edad],
-        'Sexo': [sexo],
-        'Estado civil': [estado_civil],
-        'Horas trabajadas por semana': [horas_trabajadas],
-        'Categoria ocupacional': [categoria_ocupacional],
-        'Actividad empresa': [actividad_empresa],
-        'Dominio': [dominio]
+        'edad': [edad],
+        'sexo': [sexo],
+        'estado_civil': [estado_civil],
+        'horas_trabajadas': [horas_trabajadas],
+        'categoria_ocupacional': [categoria_ocupacional],
+        'actividad_empresa': [actividad_empresa],
+        'dominio': [dominio]
     })
     st.write("DataFrame de Entradas:")
     st.write(obs)
