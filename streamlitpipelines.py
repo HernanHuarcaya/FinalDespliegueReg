@@ -55,7 +55,7 @@ if st.sidebar.button("Predecir"):
         'edad': [edad],
         'sexo': [sexo],
         'estado_civil': [estado_civil],
-        'nivel_educativo': [estado_civil],
+        'nivel_educativo': [nivel_educativo],
         'horas_trabajadas': [horas_trabajadas],
         'categoria_ocupacional': [categoria_ocupacional],
         'actividad_empresa': [actividad_empresa],
@@ -64,9 +64,9 @@ if st.sidebar.button("Predecir"):
     st.write("DataFrame de Entradas:")
     st.write(obs)
 
-target = regressor.predict(obs)
-ingreso_mensual = target[0] / 12
-st.markdown(f'<p style="font-size: 40px; color: green;">El ingreso neto mensual proyectado es de: S/ {ingreso_mensual:,.2f}</p>', unsafe_allow_html=True)
+    target = regressor.predict(obs)      
+    ingreso_mensual = target[0] / 12        
+    st.markdown(f'<p style="font-size: 40px; color: green;">El ingreso neto mensual proyectado es de: S/ {ingreso_mensual:,.2f}</p>', unsafe_allow_html=True)
 
 # Resetear
 if st.sidebar.button("Resetear"):
