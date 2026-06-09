@@ -49,10 +49,10 @@ regressor = load('Modelopipeline.joblib')
 #    encoder = pickle.load(f)
 
 # Inicializar variables
-edad = 18
+edad = 0
 sexo = 1
 estado_civil= 1
-horas_trabajadas= 24
+horas_trabajadas= 0
 categoria_ocupacional=522
 actividad_empresa=5629
 dominio= 1
@@ -65,7 +65,7 @@ st.markdown("##### Debe seleccionar las opciones, de lo contrario la predicción
 st.sidebar.header("Campos a Evaluar el ingreso de la Persona")
 
 # Entrada del usuario para RD_Spend
-edad = st.sidebar.number_input("**edad (Min=18, Max=110)**", min_value=18.0, value=float(edad))
+edad = st.sidebar.number_input("**edad (Min=18, Max=110)**", min_value=18, value=int(edad))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Sexo</h1>", unsafe_allow_html=True)
 sexo = st.sidebar.selectbox("sexo", ["Masculino", "Femenino"], index=[1,2].index(sexo))
@@ -73,7 +73,7 @@ sexo = st.sidebar.selectbox("sexo", ["Masculino", "Femenino"], index=[1,2].index
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Estado civil</h1>", unsafe_allow_html=True)
 estado_civil = st.sidebar.selectbox("estado_civil", ["Soltero", "Casado"], index=[1, 2].index(estado_civil))
 
-horas_trabajadas = st.sidebar.number_input("**horas_trabajadas (Min=24, Max=48)**", min_value=24.0, value=float(horas_trabajadas))
+horas_trabajadas = st.sidebar.number_input("**horas_trabajadas (Min=24, Max=48)**", min_value=24, value=float(horas_trabajadas))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Categoria ocupacional</h1>", unsafe_allow_html=True)
 categoria_ocupacional = st.sidebar.selectbox("categoria_ocupacional", ["barmanes y trabajadores asimilados", "explotadores forestales, trabajadores forestales clasificados y afines"], index=[522, 615].index(categoria_ocupacional))
@@ -87,7 +87,7 @@ dominio = st.sidebar.selectbox("dominio", ["Costa Norte", "Costa Centro","Costa 
 # Función para resetear las entradas
 def reset_inputs():
     global edad, sexo, estado_civil, horas_trabajadas, categoria_ocupacional, actividad_empresa, dominio
-    edad = 18
+    edad = 0
     horas_trabajadas = 0
     sexo = 1
     estado_civil = 1
@@ -98,6 +98,7 @@ def reset_inputs():
 # Botón para predecir
 if st.sidebar.button("Predecir"):
     # Validar las entradas
+    print(edad, sexo, estado_civil, horas_trabajadas, categoria_ocupacional, actividad_empresa, dominio)
     if all(isinstance(val, (int, float)) and val >= 0 for val in [edad, sexo, estado_civil, horas_trabajadas, categoria_ocupacional, actividad_empresa, dominio]):
         # Crear un DataFrame con las entradas del usuario
         obs = pd.DataFrame({
