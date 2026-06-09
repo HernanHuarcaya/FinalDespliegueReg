@@ -49,10 +49,10 @@ regressor = load('Modelopipeline.joblib')
 #    encoder = pickle.load(f)
 
 # Inicializar variables
-edad = 0
+edad = 18
 sexo = 1
 estado_civil= 1
-horas_trabajadas= 0
+horas_trabajadas= 24
 categoria_ocupacional=522
 actividad_empresa=5629
 dominio= 1
