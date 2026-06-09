@@ -58,7 +58,7 @@ actividad_empresa=5629
 dominio= 1
 
 # Streamlit app
-st.title("Modelo de Regresión")
+st.title("Modelo de Regresión -  Trabajo final")
 st.markdown("##### Debe seleccionar las opciones, de lo contrario la predicción será incorrecta.")
 
 # Sidebar para la entrada del usuario
