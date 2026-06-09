@@ -24,7 +24,7 @@ sexo_map = {"Masculino": 1, "Femenino": 2}
 sexo = sexo_map[st.sidebar.selectbox("Sexo", list(sexo_map.keys()))]
 
 # Estado civil
-ec_map = {"Soltero": 1, "Casado": 2}
+ec_map = {"Conviviente": 1, "Casado(a)": 2, "Viudo(a)": 3, "Divorciado(a)": 4, "Separado(a)": 5, "Soltero(a)": 6}
 estado_civil = ec_map[st.sidebar.selectbox("Estado civil", list(ec_map.keys()))]
 
 # Horas trabajadas
