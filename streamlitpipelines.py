@@ -13,7 +13,7 @@ defaults = {
 }
 
 st.title("Modelo de Regresión - Trabajo final")
-st.markdown("##### Debe seleccionar las opciones, de lo contrario la predicción será incorrecta.")
+st.markdown("##### Debe seleccionar las opciones relacionadas a la persona, para generar la predicción de su ingreso neto.")
 st.sidebar.header("Campos a Evaluar")
 
 # Edad
@@ -25,6 +25,10 @@ sexo = sexo_map[st.sidebar.selectbox("Sexo", list(sexo_map.keys()))]
 
 # Estado civil
 ec_map = {"Conviviente": 1, "Casado(a)": 2, "Viudo(a)": 3, "Divorciado(a)": 4, "Separado(a)": 5, "Soltero(a)": 6}
+estado_civil = ec_map[st.sidebar.selectbox("Estado civil", list(ec_map.keys()))]
+
+# Nivel educativo
+ec_map = {"Sin nivel": 1, "Educacion iniciañ": 2, "primaria incompleta": 3, "primaria completa": 4, "secundaria incompleta": 5, "secundaria completa": 6}
 estado_civil = ec_map[st.sidebar.selectbox("Estado civil", list(ec_map.keys()))]
 
 # Horas trabajadas
