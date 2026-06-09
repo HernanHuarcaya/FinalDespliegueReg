@@ -49,13 +49,13 @@ regressor = load('Modelopipeline.joblib')
 #    encoder = pickle.load(f)
 
 # Inicializar variables
-edad = "18"
-sexo = "1"
-estado_civil= "1"
+edad = 18
+sexo = 1
+estado_civil= 1
 horas_trabajadas= 24
-categoria_ocupacional="522"
-actividad_empresa="5629"
-dominio= "1"
+categoria_ocupacional=522
+actividad_empresa=5629
+dominio= 1
 
 # Streamlit app
 st.title("Modelo de Regresión")
@@ -68,32 +68,32 @@ st.sidebar.header("Campos a Evaluar el ingreso de la Persona")
 edad = st.sidebar.number_input("**edad (Min=18, Max=110)**", min_value=18.0, value=float(edad))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Sexo</h1>", unsafe_allow_html=True)
-sexo = st.sidebar.selectbox("sexo", ["Masculino", "Femenino"], index=["1", "2"].index(sexo))
+sexo = st.sidebar.selectbox("sexo", ["Masculino", "Femenino"], index=[1,2].index(sexo))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Estado civil</h1>", unsafe_allow_html=True)
-estado_civil = st.sidebar.selectbox("estado_civil", ["Soltero", "Casado"], index=["1", "2"].index(estado_civil))
+estado_civil = st.sidebar.selectbox("estado_civil", ["Soltero", "Casado"], index=[1, 2].index(estado_civil))
 
 horas_trabajadas = st.sidebar.number_input("**horas_trabajadas (Min=24, Max=48)**", min_value=24.0, value=float(horas_trabajadas))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Categoria ocupacional</h1>", unsafe_allow_html=True)
-categoria_ocupacional = st.sidebar.selectbox("categoria_ocupacional", ["barmanes y trabajadores asimilados", "explotadores forestales, trabajadores forestales clasificados y afines"], index=["522", "615"].index(categoria_ocupacional))
+categoria_ocupacional = st.sidebar.selectbox("categoria_ocupacional", ["barmanes y trabajadores asimilados", "explotadores forestales, trabajadores forestales clasificados y afines"], index=[522, 615].index(categoria_ocupacional))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Actividad empresa</h1>", unsafe_allow_html=True)
-actividad_empresa = st.sidebar.selectbox("actividad_empresa", ["Actividad 01", "Actividad 02"], index=["5629", "150"].index(actividad_empresa))
+actividad_empresa = st.sidebar.selectbox("actividad_empresa", ["Actividad 01", "Actividad 02"], index=[5629, 150].index(actividad_empresa))
 
 st.sidebar.markdown("<h1 style='font-size: 24px;'>Dominio</h1>", unsafe_allow_html=True)
-dominio = st.sidebar.selectbox("dominio", ["Costa Norte", "Costa Centro","Costa Sur","Sierra Norte","Sierra Centro"], index=["1","2","3","4","5"].index(dominio))
+dominio = st.sidebar.selectbox("dominio", ["Costa Norte", "Costa Centro","Costa Sur","Sierra Norte","Sierra Centro"], index=[1,2,3,4,5].index(dominio))
 
 # Función para resetear las entradas
 def reset_inputs():
     global edad, sexo, estado_civil, horas_trabajadas, categoria_ocupacional, actividad_empresa, dominio
     edad = 18
-    horas_trabajadas = 24
-    sexo = "Masculino"
-    estado_civil = "Soltero"
-    categoria_ocupacional = "barmanes y trabajadores asimilados"
-    actividad_empresa = "Actividad 01"
-    dominio = "Costa Norte"
+    horas_trabajadas = 0
+    sexo = 1
+    estado_civil = 1
+    categoria_ocupacional = 522
+    actividad_empresa = 5629
+    dominio = 1
 
 # Botón para predecir
 if st.sidebar.button("Predecir"):
