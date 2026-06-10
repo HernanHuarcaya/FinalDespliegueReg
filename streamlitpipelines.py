@@ -13,6 +13,8 @@ defaults = {
 }
 
 st.title("Modelo de Regresión - Trabajo final")
+st.markdown("##### Grupo: 2")
+st.markdown("##### ---------------------------------------------------------------------------")
 st.markdown("##### Debe seleccionar las opciones relacionadas a la persona, para generar la predicción de su ingreso neto.")
 st.sidebar.header("Campos a Evaluar")
 
